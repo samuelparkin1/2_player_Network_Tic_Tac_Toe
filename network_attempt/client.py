@@ -25,12 +25,20 @@ class Client():
         # Pickle the object and send it to the server
         data_string = pickle.dumps(variable)
         self.client.send(data_string)
+        msg_length = self.client.recv(5000)
+        if msg_length:
+            msg = pickle.loads(msg_length)
+            print (msg)
+            msg_length = False
+
+        
+
+
+
+
 
 client1 = Client ()
 
 while True:
     client1.send_pickle(input())
     #client1.send_pickle({1:"hi", 2: "there"})
-
-
-
