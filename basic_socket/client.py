@@ -9,6 +9,19 @@ class Client():
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.connect(self.addr)
 
+    def send(self, message):
+        data_string = pickle.dumps(message)
+        self.client.send(data_string)
+        print ('Data Sent to Server')
+
+    def receive(self):
+        data = self.client.recv(4096)
+        data_variable = pickle.loads(data)
+        print (data_variable)
+        print ('Data received from Server')
+
+        
+'''
     def comms(self):
         while True:
             variable = input()
@@ -19,6 +32,8 @@ class Client():
             data_variable = pickle.loads(data)
             print (data_variable)
             print ('Data received from Server')
+'''
         
 client1 = Client()
-client1.comms()
+client1.send(input("what is your message?\n"))
+client1.receive()
