@@ -5,19 +5,16 @@ class ProcessData:
 
 import socket, pickle
 
-
-
-
 print ("Server is Listening.....")
 HOST = socket.gethostbyname(socket.gethostname()) #automatically gets ip address of computer
-PORT = 50001
+PORT = 50005
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
+s.listen(1)
+conn, addr = s.accept()
+print ('Connected by', addr)
 
 while True:
-    s.listen(1)
-    conn, addr = s.accept()
-    print ('Connected by', addr)
     data = conn.recv(4096)
     data_variable = pickle.loads(data)
     #conn.close()
