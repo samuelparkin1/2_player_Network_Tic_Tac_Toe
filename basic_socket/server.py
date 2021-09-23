@@ -4,7 +4,6 @@ import pickle
 
 class Server():
     print ("Server online....")
-
     def __init__ (self):
         self.server_ip = socket.gethostbyname(socket.gethostname()) #automatically gets ip address of computer
         self.port = 50053
@@ -22,12 +21,13 @@ class Server():
         print ('Connected by', self.addr)
     
     def receive (self):
+        while True:
             data = self.conn.recv(4096)
             received_msg = pickle.loads(data)
             if received_msg:
                 print (received_msg)
                 print ('Data received from client')
-
+                break
         
     def send (self, message):
         # Pickle the object and send it to the server
