@@ -1,6 +1,7 @@
 import socket 
 import threading
 import pickle
+import os
 
 class Server():
     print ("Server online....")
@@ -14,28 +15,34 @@ class Server():
         self.addr = ()
         print(self.server_socket.getsockname())
 
-    def connect(self):
-        print ("Server listening for client....")
-        self.server_socket.listen(2)
-        self.conn, self.addr = self.server_socket.accept()
-        print ('Connected by', self.addr)
-    
-    def receive (self):
+    def received_messages(self, conn, addr):
+        print(f"[NEW CONNECTION] {addr} connected.")
         while True:
-            data = self.conn.recv(4096)
+            data = conn.recv(4096)
             received_msg = pickle.loads(data)
             if received_msg:
                 print (received_msg)
                 print ('Data received from client')
                 break
-        
-    def send (self, message):
+
+        conn.close()
+    
+    def sending_messages(self, message):
         # Pickle the object and send it to the server
         sending_msg = pickle.dumps(message)
         self.conn.send(sending_msg)
-        print ('Data Sent to client')
+        print ('Data Sent to client')     
+
+    def connect(self):
+        print ("Server listening for client....")
+        self.server_socket.listen(2)
+        while True:
+            conn, addr = self.server_socket.accept()
+            thread = threading.Thread(target=self.received_messages, args=(conn, addr))
+            thread.start()
+            print(f"players connected {threading.activeCount() - 1}")
+
+
 
 server1 = Server()
 server1.connect()
-server1.receive()
-server1.send(input("what is your message?\n"))
