@@ -1,6 +1,5 @@
 import socket, pickle
 import game
-import os
 
 class Client():
     def __init__(self):
