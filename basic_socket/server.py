@@ -109,30 +109,37 @@ class User():
         self.symbol = self.username[0].capitalize
         self.moves = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
         self.opponent = []
-        self.turn = []
+        self.opponent_symbol = []
+        self.turn = False
 
     def out_going_message(self):
         opponent = self.username
         moves = self.moves
-        return (opponent, moves,)
+        symbol = self.symbol
+        return (opponent, symbol, moves)
     
         
 server1 = Server()
-server1.connect()
-new_user = User()
 while True:
-    Board(new_user.moves).grid()
-    if new_user.turn:
-        Game().user_select(new_user.moves, new_user.symbol)
-        Game().win_check(new_user.moves,new_user.symbol)      
-        server1.send(new_user.out_going_message())
-        new_user.turn = False
-        print (new_user.turn) 
-    else:
-        print (new_user.turn)
-        new_user.turn = True 
-        new_user.opponent, new_user.moves= server1.receive()
-        print (new_user.moves)
+    server1.connect()
+    new_user = User()
+    game_play = True
+    while game_play:
+        Board(new_user.moves).grid()
+        if new_user.turn:
+            Game().user_select(new_user.moves, new_user.symbol)
+            if Game().win_check(new_user.moves,new_user.symbol):
+                game_play = False
+            server1.send(new_user.out_going_message())
+            new_user.turn = False
+            print (new_user.turn) 
+        else:
+            print (new_user.turn)
+            new_user.opponent, new_user.opponent_symbol, new_user.moves = server1.receive()
+            if Game().win_check(new_user.moves, new_user.opponent_symbol):
+                game_play = False       
+            print (new_user.moves)
+            new_user.turn = True
     
 
 
