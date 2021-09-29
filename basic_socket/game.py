@@ -34,7 +34,7 @@ class Tic_Tac_Toe():
                     self.moves[int(user_input)-1] = str(self.symbol)
                     break
                 else:
-                    print ("Sorry, that position has been taken.")
+                    print ("\nSorry, that position has been taken.\n")
             else:
                 print ("Sorry but that is an invalid input.")
 
@@ -53,6 +53,14 @@ class Tic_Tac_Toe():
             return True
         else:
             return False
+    
+    def draw(self, moves,):
+
+        if any (item in self.options for item in moves):
+            return False
+        else:
+            print ("The game was a draw")
+            return True
 
     def replay (self):
         while True:
@@ -66,53 +74,64 @@ class Tic_Tac_Toe():
                 print("Please enter Yes/No ")
 
 class User():
-    def __init__(self):
-        self.username = "sam" #(input("whats your players name?"))
-        #self.symbol = "x"
-        self.moves = ["1","2","3","4","5","6","7","8","9"]
-        self.opponent = []
+    def __init__(self, opponent ):
+        self.moves = ["x","x","3","o","o","6","7","8","9"]
+        #self.moves = ["1","2","3","4","5","6","7","8","9"]
+        self.opponent = opponent
         self.opponent_symbol = []
         self.turn = []
 
     def out_going_message(self, symbol):
-        opponent = self.username
         moves = self.moves
-        return (opponent, symbol, moves)
+        return (symbol, moves)
 
 class Game ():
 
     connected = True
+
     def play (self, player):
         self.player = player
-        while self.connected == True:     
-            self.game_play = True
-            while self.game_play:
-                os.system('cls||clear')
-                Board(self.player.play.moves).grid()
-                if self.player.play.turn:
-                    Tic_Tac_Toe().user_select(self.player.play.moves, self.player.symbol)
-                    self.player.send(self.player.play.out_going_message(self.player.symbol))
-                    self.player.play.turn = False
+        while self.connected == True:
+            try:
+                self.game_play = True
+                while self.game_play:
                     os.system('cls||clear')
-                    Board(self.player.play.moves).grid()
-                    if Tic_Tac_Toe().win_check(self.player.play.moves, self.player.symbol, self.player.play.opponent):
-                        if Tic_Tac_Toe().replay():
-                            self.player.play = User() 
-                            self.game_play = False                    
-                        else:
-                            self.connected = False
-                            break
-                    
-                else:
-                    print ("Waiting for other player to make a move.")
-                    self.player.play.opponent, self.player.play.opponent_symbol, self.player.play.moves = self.player.receive()
-                    os.system('cls||clear')
-                    Board(self.player.play.moves).grid()            
-                    if Tic_Tac_Toe().win_check(self.player.play.moves, self.player.play.opponent_symbol, self.player.play.opponent):
-                        if Tic_Tac_Toe().replay():
-                            self.player.play = User() 
-                            self.game_play = False                    
-                        else:
-                            self.connected = False
-                            break    
-                    self.player.play.turn = True
+                    Board(self.player.info.moves).grid()
+                    if self.player.info.turn:
+                        Tic_Tac_Toe().user_select(self.player.info.moves, self.player.symbol)
+                        self.player.send(self.player.info.out_going_message(self.player.symbol))
+                        self.player.info.turn = False
+                        os.system('cls||clear')
+                        Board(self.player.info.moves).grid()
+                        if Tic_Tac_Toe().win_check(self.player.info.moves, self.player.symbol, self.player.username) or Tic_Tac_Toe().draw(self.player.info.moves):
+                            
+                            if Tic_Tac_Toe().replay():
+                                self.player.info = User(self.player.info.opponent) 
+                                self.game_play = False                    
+                            else:
+                                self.player.socket.close()
+                                self.connected = False
+                                break
+                        
+                    else:
+                        print (f"Waiting for {self.player.info.opponent} to make a move.")
+                        self.player.info.opponent_symbol, self.player.info.moves = self.player.receive()
+                        os.system('cls||clear')
+                        Board(self.player.info.moves).grid()
+                        if Tic_Tac_Toe().win_check(self.player.info.moves, self.player.info.opponent_symbol, self.player.opponent) or Tic_Tac_Toe().draw(self.player.info.moves):
+                                
+                            if Tic_Tac_Toe().replay():
+                                self.player.info = User(self.player.info.opponent) 
+                                self.game_play = False                    
+                            else:
+                                self.player.socket.close()
+                                self.connected = False
+                                break    
+                        self.player.info.turn = True
+
+            except EOFError:
+                self.player.socket.close()
+                print (input ("Looks like the other player has disconnected. Press Enter to end game"))
+                self.connected = False
+
+
