@@ -11,7 +11,7 @@ def connect(self):
     self.send(self.username)
     self.opponent = self.receive()
 
-
+os.system('cls||clear')
 Asci_art()
 client = Comms(input("Please enter servers IP address\n"), "o")
 try:
@@ -19,6 +19,6 @@ try:
 except ConnectionRefusedError:
     print ("Server not connected...")
     exit()
-client.game_info = User(client.opponent)
+client.game_info = User_info(client.opponent)
 client.game_info.turn = True
 Game().play(client)

@@ -1,5 +1,4 @@
 try:
-    import socket
     from classes import *
 except ModuleNotFoundError as import_error:
     print (import_error)
@@ -14,10 +13,11 @@ def connect(self):
     self.send(self.username)
     print ("Waiting for client to join....")
 
+
 Asci_art()
 server = Comms(socket.gethostbyname(socket.gethostname()), "x")
 print(f"The server ip address:\n{server.server_ip}")
 connect(server)
-server.game_info = User(server.opponent)
+server.game_info = User_info(server.opponent)
 server.game_info.turn = False
 Game().play(server)

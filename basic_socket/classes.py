@@ -77,7 +77,7 @@ class Tic_Tac_Toe():
             (moves[0] == moves[4] == moves[8] == symbol) or
             (moves[2] == moves[4] == moves[6] == symbol)
         ):
-            print (f"{player} has Won the game")
+            print (f"{player} won the game")
             return True
         else:
             return False
@@ -102,7 +102,7 @@ class Tic_Tac_Toe():
                 print("Please enter Yes/No ")
 
 
-class User():
+class User_info():
     def __init__(self, opponent):
         self.moves = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
         self.opponent = opponent
@@ -132,10 +132,10 @@ class Game ():
                         player.game_info.turn = False
                         os.system('cls||clear')
                         Board(player.game_info.moves).grid()
-                        if Tic_Tac_Toe().win_check(player.game_info.moves, player.symbol, player.username) or Tic_Tac_Toe().draw(player.game_info.moves):
+                        if Tic_Tac_Toe().win_check(player.game_info.moves, player.symbol, "You have") or Tic_Tac_Toe().draw(player.game_info.moves):
 
                             if Tic_Tac_Toe().replay():
-                                player.game_info = User(player.game_info.opponent)
+                                player.game_info = User_info(player.game_info.opponent)
                                 self.game_play = False
                             else:
                                 player.socket.close()
@@ -147,10 +147,10 @@ class Game ():
                         player.game_info.opponent_symbol, player.game_info.moves = player.receive()
                         os.system('cls||clear')
                         Board(player.game_info.moves).grid()
-                        if Tic_Tac_Toe().win_check(player.game_info.moves, player.game_info.opponent_symbol, player.opponent) or Tic_Tac_Toe().draw(player.game_info.moves):
+                        if Tic_Tac_Toe().win_check(player.game_info.moves, player.game_info.opponent_symbol, f"{player.opponent} has") or Tic_Tac_Toe().draw(player.game_info.moves):
 
                             if Tic_Tac_Toe().replay():
-                                player.game_info = User(player.game_info.opponent)
+                                player.game_info = User_info(player.game_info.opponent)
                                 self.game_play = False
                             else:
                                 player.socket.close()
