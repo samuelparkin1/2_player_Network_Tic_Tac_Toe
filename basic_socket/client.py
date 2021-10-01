@@ -1,12 +1,11 @@
 try:
-    import socket 
-    import pickle
     from classes import *
 except ModuleNotFoundError as import_error:
     print (import_error)
     exit()
 
-def connect(self):        
+
+def connect(self):
     self.socket.connect(self.addr)
     self.conn = self.socket
     self.send(self.username)

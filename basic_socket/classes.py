@@ -168,11 +168,11 @@ class Game ():
                 print (input(f"Looks like {player.opponent} has disconnected. Press Enter to end game"))
                 self.connected = False
 
+
 class Asci_art():
     print("""
  _______________  _________  _____  __________  ____
 /_  __/  _/ ___/ /_  __/ _ |/ ___/ /_  __/ __ \/ __/
  / / _/ // /__    / / / __ / /__    / / / /_/ / _/  
 /_/ /___/\___/   /_/ /_/ |_\___/   /_/  \____/___/  
-                                                    
 """)

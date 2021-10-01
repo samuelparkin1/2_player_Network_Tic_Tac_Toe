@@ -5,7 +5,7 @@ except ModuleNotFoundError as import_error:
     print (import_error)
     exit()
 
-      
+
 def connect(self):
     self.socket.bind(self.addr)
     self.socket.listen(2)
