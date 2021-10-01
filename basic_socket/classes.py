@@ -48,11 +48,6 @@ class Board():
         os.system('cls||clear')
 
 
-class Symbol():
-    def __init__(self, symbol):
-        self.symbol = symbol[0]
-
-
 class Tic_Tac_Toe():
     def __init__(self):
         self.options = ("1", "2", "3", "4", "5", "6", "7", "8", "9")
@@ -109,7 +104,7 @@ class Tic_Tac_Toe():
 
 class User():
     def __init__(self, opponent):
-        self.moves = ["x", "x", "3", "o", "o", "6", "7", "8", "9"]
+        self.moves = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
         self.opponent = opponent
         self.opponent_symbol = []
         self.turn = []

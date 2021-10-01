@@ -12,12 +12,12 @@ def connect(self):
     self.conn, self.addr = self.socket.accept()
     self.opponent = self.receive()
     self.send(self.username)
+    print ("Waiting for client to join....")
 
 Asci_art()
 server = Comms(socket.gethostbyname(socket.gethostname()), "x")
 print(f"The server ip address:\n{server.server_ip}")
 connect(server)
-print ("Waiting for client to join....")
 server.game_info = User(server.opponent)
 server.game_info.turn = False
 Game().play(server)
