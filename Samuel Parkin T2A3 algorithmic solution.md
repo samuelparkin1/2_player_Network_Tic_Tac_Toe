@@ -16,7 +16,7 @@ When either the Server.py or Client.py programs are first started it will create
  
 Within each Server.py and Client.py programs there are individual ‘Connect’ functions that are unique to each other. The instances of the ‘Comms’ objects that were previously made will be used as the argument of the ‘Connect’ functions. This will initiate a socket connection.
 
-The ‘User_info’ class object will store variables for each player and will be used throughout the game.  This ‘User_info’ class object is inherited by the ‘Comms’ class and saved as the variable ‘Game_info’ with in the ‘Comms’ class. When a game has been won or drawn, and the player wants to play again, the User_info can be reset.
+The ‘User_info’ class object will store variables for each player and will be used throughout the game.  This ‘User_info’ class object is inherited by the ‘Comms’ class and saved as the variable ‘Game_info’ within the ‘Comms’ class. When a game has been won or drawn, and the player wants to play again, the User_info can be reset.
 
 Within the User_info class it will include:
 

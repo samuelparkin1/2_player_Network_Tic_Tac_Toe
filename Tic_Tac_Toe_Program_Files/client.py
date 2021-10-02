@@ -54,7 +54,10 @@ try:
 except ConnectionRefusedError:
     # If Unable to connect to the server, prints a message to the terminal.
     print ("Server not connected...")
-
+    # Exit the programme
+    exit()
+except socket.gaierror:
+    print ("Incorrect IP address has been entered")
     # Exit the programme
     exit()
 
